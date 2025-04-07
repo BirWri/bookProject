@@ -7,6 +7,10 @@ def get_random_book():
     response = requests.get(base_url)
     data = response.json()
     print(data['count'])
+
+    # How many book per page
+    books_per_page=len(data['results'])
+    print(books_per_page)
     
     # Generate random int between 1 and the number of books
     #book_id = random.randint(1, data['count'])
