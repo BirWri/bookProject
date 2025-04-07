@@ -9,8 +9,16 @@ def get_random_book():
     print(data['count'])
     
     # Generate random int between 1 and the number of books
-    book_id = random.randint(1, data['count'])
-    print(book_id)
+    #book_id = random.randint(1, data['count'])
+    test_book_id = 26184
+    print(test_book_id)
+
+    # Find the random book from json
+    for title in data['results']:
+        if test_book_id == title['id']:
+            for author in title['authors']:
+                print (f"The random book of the day is '{title['title']}' written by the {author['name']}")
+
 
 # === Run the script ===
 if __name__ == "__main__":
