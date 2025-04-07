@@ -6,23 +6,30 @@ def get_random_book():
     base_url = "https://gutendex.com/books"
     response = requests.get(base_url)
     data = response.json()
-    print(data['count'])
+    total_number_of_books = data['count']
 
     # How many book per page
     books_per_page=len(data['results'])
-    print(books_per_page)
+
+    # Number of pages
+    number_of_pages=int(data['count']/books_per_page)
     
-    # Generate random int between 1 and the number of books
-    #book_id = random.randint(1, data['count'])
-    test_book_id = 26184
-    print(test_book_id)
+    # Generate random int between 1 and the number of pages
+    page_number = random.randint(1, number_of_pages)
+    #print(page_number)
 
-    # Find the random book from json
-    for title in data['results']:
-        if test_book_id == title['id']:
-            for author in title['authors']:
-                print (f"The random book of the day is '{title['title']}' written by the {author['name']}")
 
+    # Get data for the page
+    page_response = requests.get(f"{base_url}?page={page_number}")
+    page_data = page_response.json()
+    books = page_data["results"]
+    
+    # Select a random book from the random page
+    random_book = random.choice(books)
+    title = random_book['title']
+    for author in random_book['authors']:
+        print (f"The random book of the day is '{title}' written by {author['name']} ")
+    
 
 # === Run the script ===
 if __name__ == "__main__":
